@@ -1,0 +1,54 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. MORTGAGE.
+
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+       01 INPUT-FIELDS.
+          03 BALANCE-START      PIC 9(6)V99.
+          03 YEARS              PIC 99.
+          03 REPAYMENT          PIC 999V99.
+          03 INTEREST-RATE      PIC 99V99.
+       01 CALCULATION-FIELDS.
+          03 BALANCE-END        PIC 9(6)V99.
+          03 INTEREST           PIC 9(6)V99.
+       01 OUTPUT-FIELDS.
+          03 BALANCE-START-OUT  PIC $ZZ,ZZ9.99.
+          03 BALANCE-END-OUT    PIC $ZZ,ZZ9.99.
+          03 INTEREST-OUT       PIC $ZZ,ZZ9.99.
+       01 WS-YEAR              PIC 99.
+
+       PROCEDURE DIVISION.
+       MAIN-PARA.
+           MOVE 100000.00 TO BALANCE-START
+           MOVE 30         TO YEARS
+           MOVE 500.00     TO REPAYMENT
+           MOVE 05.50      TO INTEREST-RATE
+
+           DISPLAY "MORTGAGE PAYMENT CALCULATOR"
+           DISPLAY "BALANCE: " BALANCE-START
+           DISPLAY "YEARS:   " YEARS
+           DISPLAY "MONTHLY: " REPAYMENT
+           DISPLAY "RATE:    " INTEREST-RATE
+           DISPLAY " "
+           DISPLAY " YEAR    START         INTEREST"
+      -           "      END"
+
+           PERFORM CALCULATE-INTEREST
+               VARYING WS-YEAR FROM 1 BY 1
+               UNTIL WS-YEAR > YEARS
+
+           STOP RUN.
+
+       CALCULATE-INTEREST.
+           COMPUTE INTEREST ROUNDED =
+               (BALANCE-START * INTEREST-RATE) / 100
+           COMPUTE BALANCE-END =
+               BALANCE-START + INTEREST - (12 * REPAYMENT)
+           MOVE BALANCE-START TO BALANCE-START-OUT
+           MOVE INTEREST TO INTEREST-OUT
+           MOVE BALANCE-END TO BALANCE-END-OUT
+           DISPLAY "  " WS-YEAR "  "
+               BALANCE-START-OUT "  "
+               INTEREST-OUT "  "
+               BALANCE-END-OUT
+           MOVE BALANCE-END TO BALANCE-START.

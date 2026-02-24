@@ -1,0 +1,15 @@
+# Local work (not for git)
+samples/
+docs/
+memory-bank/
+.m7/
+.cursorrules
+.cursor/
+INDEX.md
+MASTER_REFERENCE.md
+CODING_STANDARDS.md
+CYCLE_REGISTRY.md
+PROJECT_SCHEMA.yaml
+
+# macOS
+.DS_Store
